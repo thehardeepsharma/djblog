@@ -23,5 +23,6 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('music/', include('music.urls')),
     path('polls/', include('polls.urls')),
+	path('alphavantage/', include('alphavantage_app.urls')),
     path('admin/', admin.site.urls),
 ]

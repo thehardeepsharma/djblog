@@ -1,0 +1,77 @@
+{% extends "djblog/layout/base.html" %}
+{% load static %}
+
+{% block title %} Welcome to Alpha Vantage {% endblock %}
+
+{% block body %}
+
+<p>
+    <h1><center> Welcome to Alpha Vantage </center></h1>
+</p>
+
+<form name="trading" method="post">
+    {% csrf_token %}
+
+    <div class="container" style="max-width: 1000px; padding: 0px">    
+    	<div class="row">
+    		<div class="col-md-12">
+    			<div class="col-md-2">
+    				<select name="api_detail" class="form-control" style="width:160px">
+	                    {% for api in api_list %}
+	                         <option value="{{api.id}}">{{api.name}}</option>
+	                    {% endfor %}
+	                </select>
+    			</div>
+    			<div class="col-md-2">
+    				<select name="symbol_parent_detail" class="form-control" style="width:140px">
+			             {% for source in symbols_parent_list %}
+			             <option value="{{source.name}}" >{{source.name}}</option>
+			            {% endfor %}
+			        </select>
+    			</div>
+    			<div class="col-md-2">
+    				<select name="symbol_detail" class="form-control" style="width:140px">
+			            {% for sy in symbols_list %}
+			            <option value="{{sy.name}}" {% if sy.name == symbol_name %}  selected="selected" {% endif %} >{{sy.name}}</option>
+			            {% endfor %}
+			        </select>
+    			</div>
+    			<div class="col-md-2">
+    				<select name="data_type" class="form-control" style="width:140px">
+			            {% for type_data in data_type_list %}
+			            <option value="{{type_data.name}}" {% if type_data.name == type_of_data %}  selected="selected" {% endif %} >{{type_data.name}}</option>
+			            {% endfor %}
+					</select>
+    			</div>
+    			<div class="col-md-2">
+    				<input type="submit" name="submit" value="Fetch Data" class="btn btn-primary">
+    			</div>
+    		</div>          
+        </div>
+  	</div>
+</form>
+<hr/>
+<table class="table table-border">
+	<thead>
+		<tr>
+			<th>TimeSeries</th>
+			<th>Open</th>
+			<th>High</th>
+			<th>Low</th>
+			<th>Close</th>
+			<th>Volume</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for key, value in api_data.items %}
+        <tr>
+        	<td>{{ key }}</td>
+	        {% for  k, v in value.items %}
+	            <td>{{ v }}</td>
+	        {% endfor %}
+        </tr>
+    {% endfor %}  			
+	</tbody>
+</table>
+
+{% endblock %}

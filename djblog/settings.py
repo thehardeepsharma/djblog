@@ -22,6 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = ')i&p-()yzb3n49y29er7er_#9j&z$mku-wi9mdr3f#*946+hrq'
 
+API_KEY = 'IF0GVC63L4LYZKYP'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -35,13 +37,13 @@ INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'music.apps.MusicConfig',
     'dashboard.apps.DashboardConfig',
+	'alphavantage_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    'django.contrib.staticfiles',	
     'django_hosts',
 ]
 
