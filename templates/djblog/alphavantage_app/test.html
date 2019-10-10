@@ -46,6 +46,9 @@
     			<div class="col-md-2">
     				<input type="submit" name="submit" value="Fetch Data" class="btn btn-primary">
     			</div>
+    			<div class="col-md-2">
+    				<a href="javascript:void(0);" id="export" class="btn btn-default">Export</a>
+    			</div>
     		</div>          
         </div>
   	</div>
@@ -73,5 +76,13 @@
     {% endfor %}  			
 	</tbody>
 </table>
-
+<script>
+	$('#export').click(function() {
+		var api_detail = $('select[name="api_detail"]').val();
+		var symbol_parent_detail = $('select[name="symbol_parent_detail"]').val();
+		var symbol_detail = $('select[name="symbol_detail"]').val();
+		var data_type = $('select[name="data_type"]').val();
+		window.location.href="/alphavantage/data/export/"+api_detail+'/'+symbol_parent_detail+'/'+symbol_detail+'/'+data_type+'/';
+	});
+</script>
 {% endblock %}

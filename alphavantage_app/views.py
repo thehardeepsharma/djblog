@@ -1,9 +1,10 @@
 
+import csv
+import json
 from django.conf import settings
 from django.shortcuts import render
 from alpha_vantage.timeseries import TimeSeries
-import csv
-import json
+from django.http import JsonResponse, HttpResponse
 
 
 def data_view(request):
@@ -57,3 +58,34 @@ def data_view(request):
         'symbol_name': symbol_detail,
         'type_of_data': data_type,
     })
+
+
+def export_data(request, api_detail, parent_symbol, symbol, data_type):
+    # print('Request Data: ', api_detail, parent_symbol, symbol, data_type)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;filename=av_data.csv'
+
+    # opts = queryset.model._meta
+    field_names = ['Time Series', 'Open', 'High', 'Low', 'Close', 'Volume']
+
+    writer = csv.writer(response)
+    writer.writerow(field_names)
+
+    if api_detail == '1':
+        ts = TimeSeries(key=settings.API_KEY, output_format='json')
+        if data_type == 'Intraday':
+            api_data, meta_data = ts.get_intraday(symbol=symbol, interval='1min', outputsize='full')
+        elif data_type == 'Weekly':
+            api_data, meta_data = ts.get_weekly(symbol=symbol)
+        elif data_type == 'Daily':
+            api_data, meta_data = ts.get_daily(symbol=symbol)
+        else:
+            api_data, meta_data = ts.get_monthly(symbol=symbol)
+
+    for key,value in api_data.items():
+        csv_list = [key]
+        for  k, v in value.items():
+            csv_list.append(v)
+        writer.writerow(csv_list)
+
+    return response
