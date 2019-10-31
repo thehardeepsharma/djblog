@@ -2,10 +2,10 @@ from django.urls import path
 
 from . import views
 
-app_name = 'dashboard'
+app_name = 'my_dashboard'
 
 urlpatterns = [
-    # /dashboard/
+    # /my_dashboard/
     path('', views.DashboardView.as_view(), name='index')
 ]
 
