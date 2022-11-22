@@ -20,7 +20,7 @@ idna==2.8
 mysql-connector==2.2.9
 mysqlclient==1.4.2.post1
 phonenumbers==8.10.22
-Pillow==6.2.1
+Pillow==9.3.0
 pkg-resources==0.0.0
 purl==1.5
 pycountry==19.8.18
